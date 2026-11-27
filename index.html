@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FertiCafé · Abona tu café sin análisis de suelo</title>
+<meta name="description" content="FertiCafé calcula cuánto y qué fertilizante aplicar a tu café, sin análisis de suelo, con las recomendaciones generales de Cenicafé. San Lorenzo, Nariño.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>
+  // Si un archivo no carga, deja un recuadro con su nombre (en vez de quitarlo).
+  function falta(el){var d=document.createElement("div");d.className="falta";d.textContent=(el.getAttribute("src")||"").replace("img/","");el.replaceWith(d);}
+</script>
+<style>
+  :root{
+    --lino:#EFE9DD;        /* fondo claro, tono lino */
+    --papel:#F8F4EB;       /* tarjetas */
+    --bosque:#12281C;      /* bandas oscuras */
+    --bosque2:#1A3827;
+    --crema:#F3EDE0;       /* texto sobre oscuro */
+    --acento:#2F5E3A;      /* único acento */
+    --acento-suave:#A9CDB0;
+    --tinta:#1A1A18;
+    --gris:#625D54;
+    --linea:#D6CEBE;
+    --linea-osc:rgba(243,237,224,.22);
+    --serif:"Fraunces",Georgia,"Times New Roman",serif;
+    --sans:"Manrope",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--lino);color:var(--tinta);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;padding-bottom:78px}
+  img,video{display:block;max-width:100%}
+  [hidden]{display:none!important}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em}
+  h1{font-size:2.05rem;margin-bottom:16px}
+  h2{font-size:1.75rem;margin-bottom:14px}
+  h3{font-size:1.12rem;margin-bottom:8px}
+  p{margin-bottom:12px}
+  p:last-child{margin-bottom:0}
+  .in{max-width:980px;margin:0 auto;padding:0 22px}
+  section{padding:64px 0}
+  .claro{background:var(--lino)}
+  .oscuro{background:var(--bosque);color:var(--crema)}
+  .oscuro h2,.oscuro h3{color:#fff}
+  .etiqueta{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--acento);margin-bottom:14px}
+  .oscuro .etiqueta{color:var(--acento-suave)}
+  .regla{width:44px;height:2px;background:var(--acento);margin:0 0 18px}
+  .oscuro .regla{background:var(--acento-suave)}
+  .lead{font-size:1.06rem;color:var(--gris);max-width:62ch}
+  .oscuro .lead{color:#d7d1c3}
+  .muted{color:var(--gris);font-size:.86rem}
+  .oscuro .muted{color:#b9b3a5}
+
+  /* Botones */
+  .btn{display:inline-block;padding:15px 24px;background:var(--acento);color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;border:1px solid var(--acento);border-radius:4px;transition:transform .15s ease,background .15s ease}
+  .btn:hover{background:#244b2e}
+  .btn:active{transform:translateY(1px) scale(.99)}
+  .btn.claro-btn{background:var(--crema);color:var(--bosque);border-color:var(--crema)}
+  .btn.claro-btn:hover{background:#fff}
+  .btn.borde{background:transparent;color:var(--acento)}
+  .btn.borde:hover{background:rgba(47,94,58,.08)}
+  .oscuro .btn.borde{color:var(--crema);border-color:var(--linea-osc)}
+  .oscuro .btn.borde:hover{background:rgba(243,237,224,.08)}
+  .botones{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+
+  /* Inicio */
+  .hero{padding:44px 0 56px}
+  .hero-grid{display:grid;gap:30px}
+  .hero .sub{font-size:1.02rem;color:#d7d1c3}
+  .marco{border:1px solid var(--linea-osc);border-radius:6px;overflow:hidden;background:var(--bosque2)}
+  .marco img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+  .pie-img{font-size:.74rem;color:#b9b3a5;margin-top:8px}
+  .claro .pie-img{color:var(--gris)}
+  .marca{font-family:var(--serif);font-size:1.05rem;color:#fff;margin-bottom:34px;letter-spacing:.02em}
+
+  .falta{display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;min-height:140px;font-family:ui-monospace,Consolas,monospace;font-size:.8rem;color:var(--gris);background:#E2DCCD}
+  .marco .falta{aspect-ratio:16/9;color:var(--crema);background:var(--bosque2)}
+  .celu .falta{aspect-ratio:9/19.5;border-radius:11px}
+  .caja .falta{aspect-ratio:16/9}
+  .caja.alta .falta{aspect-ratio:3/4}
+
+  /* Problema */
+  .cita{font-family:var(--serif);font-style:italic;font-size:1.22rem;line-height:1.4;border-left:2px solid var(--acento);padding-left:16px;margin:18px 0 26px;max-width:58ch}
+  .tres{display:grid;gap:14px}
+  .tarjeta{background:var(--papel);border:1px solid var(--linea);border-radius:6px;padding:22px}
+  .tarjeta .n{font-family:var(--serif);font-size:1.7rem;color:var(--acento);line-height:1;margin-bottom:10px}
+  .tarjeta p{color:var(--gris);font-size:.95rem}
+
+  /* Solución */
+  .sol-lista{display:grid;gap:14px;margin-top:22px}
+  .capturas{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:30px}
+  .celu{background:var(--papel);border:1px solid var(--linea);border-radius:16px;padding:6px}
+  .celu img{width:100%;height:auto;aspect-ratio:9/19.5;object-fit:cover;object-position:top;border-radius:11px}
+  .capturas figcaption{font-size:.78rem;color:var(--gris);margin-top:7px;text-align:center}
+  .medios{display:grid;gap:18px;margin-top:30px}
+  .caja{border:1px solid var(--linea);border-radius:6px;overflow:hidden;background:#e2dccd}
+  .caja img{width:100%;height:auto;object-fit:cover}
+  .caja video{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;background:#000}
+  .caja.ancha img{aspect-ratio:16/9}
+  .caja.alta img{aspect-ratio:3/4}
+  .aviso{margin-top:26px;border:1px solid var(--linea);border-left:3px solid var(--acento);background:var(--papel);padding:14px 16px;font-size:.92rem;color:var(--gris);border-radius:3px}
+
+  /* Prueba */
+  .datos{list-style:none;display:grid;gap:12px;margin-top:24px}
+  .datos li{border:1px solid var(--linea-osc);border-radius:6px;padding:16px 18px;color:#d7d1c3;font-size:.95rem}
+  .datos strong{display:block;font-family:var(--serif);font-size:1.2rem;color:#fff;margin-bottom:4px;font-weight:600}
+  .tabla-caja{overflow-x:auto;margin-top:8px}
+  table{width:100%;border-collapse:collapse;font-size:.92rem}
+  th,td{border:1px solid var(--linea-osc);padding:9px 12px;text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  th{background:rgba(243,237,224,.08);font-weight:600;color:#fff}
+  .sub-h{margin-top:30px;font-size:1.1rem}
+
+  /* Redes */
+  .carrusel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 22px 14px;margin:26px -22px 0;-webkit-overflow-scrolling:touch}
+  .lamina{flex:0 0 76%;max-width:300px;aspect-ratio:4/5;scroll-snap-align:center;background:var(--papel);border:1px solid var(--linea);border-radius:6px;padding:22px;display:flex;flex-direction:column;justify-content:space-between}
+  .lamina.con-img{padding:0;overflow:hidden;background:var(--bosque)}
+  .lamina.con-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .lamina.osc{background:var(--bosque);color:var(--crema);border-color:var(--bosque)}
+  .lamina .n{font-size:.78rem;letter-spacing:.06em;color:var(--gris)}
+  .lamina.osc .n{color:var(--acento-suave)}
+  .lamina p{font-family:var(--serif);font-size:1.28rem;line-height:1.3;margin:0}
+  .lamina small{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--acento)}
+  .lamina.osc small{color:var(--acento-suave)}
+  .deslizar{font-size:.8rem;color:var(--gris);margin-top:4px}
+  .post{margin-top:26px;background:var(--papel);border:1px solid var(--linea);border-radius:6px;padding:20px;max-width:640px}
+  .post .gancho{font-weight:600}
+  .post .tags{color:var(--acento);font-size:.88rem}
+
+  footer{background:var(--bosque);color:#b9b3a5;padding:26px 0 30px;font-size:.84rem;border-top:1px solid var(--linea-osc)}
+
+  /* WhatsApp fijo */
+  .fijo{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--bosque);border-top:1px solid var(--linea-osc);padding:11px 18px}
+  .fijo .btn{display:block;text-align:center;width:100%;max-width:520px;margin:0 auto;background:var(--crema);color:var(--bosque);border-color:var(--crema)}
+
+  /* Entrada suave */
+  .js .rev{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+  .js .rev.ya{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.js .rev{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+  @media (min-width:820px){
+    body{padding-bottom:0}
+    .fijo{display:none}
+    h1{font-size:3rem}
+    h2{font-size:2.15rem}
+    section{padding:84px 0}
+    .hero{padding:56px 0 84px}
+    .hero-grid{grid-template-columns:1.05fr 1fr;align-items:center;gap:48px}
+    .tres,.sol-lista{grid-template-columns:repeat(3,1fr)}
+    .medios{grid-template-columns:1fr 1fr;align-items:start}
+    .datos{grid-template-columns:1fr 1fr}
+    .carrusel{margin:26px 0 0;padding:4px 0 14px}
+    .lamina{flex-basis:290px}
+  }
+</style>
+</head>
+<body>
+
+<!-- 1. INICIO -->
+<section class="oscuro hero" id="inicio">
+  <div class="in">
+    <div class="marca">FertiCafé</div>
+    <div class="hero-grid">
+      <div>
+        <p class="etiqueta">San Lorenzo, Nariño</p>
+        <h1>FertiCafé te dice cuánto y qué fertilizante aplicar, sin análisis de suelo.</h1>
+        <p class="sub">Para el caficultor que no tiene análisis de suelo.</p>
+        <div class="botones">
+          <a class="btn claro-btn" href="https://wa.me/573234505069?text=Hola,%20quiero%20calcular%20el%20abono%20de%20mi%20lote%20de%20caf%C3%A9" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+          <a class="btn borde" href="#solucion">Ver cómo funciona</a>
+        </div>
+      </div>
+      <figure>
+        <div class="marco" id="hero-img"><img src="img/hero.jpg" alt="Cafetal de ladera en San Lorenzo, Nariño" width="1280" height="720" fetchpriority="high" onerror="falta(this)"></div>
+        <figcaption class="pie-img">Imagen generada con IA.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 2. EL PROBLEMA -->
+<section class="claro rev" id="problema">
+  <div class="in">
+    <p class="etiqueta">El problema</p>
+    <div class="regla"></div>
+    <h2>Abonar sin saber cuánto.</h2>
+    <p class="cita">No sé cuánto fertilizante le debo poner a mis plantas porque no tengo análisis de suelo y no sé cuál abono me sale más barato.</p>
+    <div class="tres">
+      <article class="tarjeta">
+        <div class="n">1</div>
+        <h3>Compra sin cantidad exacta</h3>
+        <p>Va a comprar fertilizante sin saber la cantidad exacta. Teme pasarse o quedarse corto.</p>
+      </article>
+      <article class="tarjeta">
+        <div class="n">2</div>
+        <h3>Elección por confianza, no por precio</h3>
+        <p>Al elegir entre grados de abono compuesto, no sabe cuál le conviene. Se queda con la recomendación del vendedor.</p>
+      </article>
+      <article class="tarjeta">
+        <div class="n">3</div>
+        <h3>Recordatorios de fertilización</h3>
+        <p>Se le olvida cuándo debe fertilizar cada lote. Aplica fuera de tiempo o deja de hacerlo.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 3. LA SOLUCIÓN -->
+<section class="claro rev" id="solucion" style="padding-top:0">
+  <div class="in" style="border-top:1px solid var(--linea);padding-top:64px">
+    <p class="etiqueta">La solución</p>
+    <div class="regla"></div>
+    <h2>Una respuesta para cada momento.</h2>
+    <p class="lead">El usuario escribe finca, lote, área, densidad y fecha, y elige la etapa: levante, zoca o producción.</p>
+    <div class="sol-lista">
+      <article class="tarjeta">
+        <h3>Dosis y compra</h3>
+        <p>Calcula la dosis recomendada en gramos por planta y la cantidad de bultos de 50 kg necesarios.</p>
+      </article>
+      <article class="tarjeta">
+        <h3>El abono más barato</h3>
+        <p>Compara los costos de los grados compuestos y muestra cuál le sale más barato.</p>
+      </article>
+      <article class="tarjeta">
+        <h3>Calendario</h3>
+        <p>Genera un calendario de aplicaciones con recordatorios para cada lote, y un informe para imprimir.</p>
+      </article>
+    </div>
+
+    <div class="capturas">
+      <figure><div class="celu"><img src="img/captura-1.jpg" alt="Captura de FertiCafé: datos del lote" onerror="falta(this)"></div><figcaption>Datos del lote</figcaption></figure>
+      <figure><div class="celu"><img src="img/captura-2.jpg" alt="Captura de FertiCafé: plan y costo" onerror="falta(this)"></div><figcaption>Plan y costo</figcaption></figure>
+      <figure><div class="celu"><img src="img/captura-3.jpg" alt="Captura de FertiCafé: abono compuesto" onerror="falta(this)"></div><figcaption>Abono compuesto</figcaption></figure>
+    </div>
+
+    <div class="medios">
+      <figure class="medio" id="m-producto">
+        <div class="caja alta"><img src="img/producto.jpg" alt="Una mano sostiene un celular con FertiCafé en el cafetal" onerror="falta(this)"></div>
+        <figcaption class="pie-img">Imagen generada con IA.</figcaption>
+      </figure>
+      <figure class="medio" id="m-clip">
+        <div class="caja"><video src="img/clip.mp4" muted loop playsinline controls preload="metadata" poster="img/producto.jpg" onerror="falta(this)"></video></div>
+        <figcaption class="pie-img">Video generado con IA.</figcaption>
+      </figure>
+      <figure class="medio" id="m-fert">
+        <div class="caja alta"><img src="img/fertilizando.jpg" alt="Caficultor fertilizando el cafetal" onerror="falta(this)"></div>
+        <figcaption class="pie-img">Imagen generada con IA.</figcaption>
+      </figure>
+      <figure class="medio" id="m-clipf">
+        <div class="caja"><video src="img/clip-fertilizando.mp4" muted loop playsinline controls preload="metadata" poster="img/fertilizando.jpg" onerror="falta(this)"></video></div>
+        <figcaption class="pie-img">Video generado con IA.</figcaption>
+      </figure>
+    </div>
+
+    <p class="aviso">FertiCafé es un prototipo educativo. Las recomendaciones son generales, vienen de Cenicafé y no reemplazan el análisis de suelo ni al asistente técnico.</p>
+    <div class="botones">
+      <a class="btn" href="app/">Abrir la app</a>
+      <a class="btn borde" href="https://wa.me/573234505069?text=Hola,%20quiero%20calcular%20el%20abono%20de%20mi%20lote%20de%20caf%C3%A9" target="_blank" rel="noopener">Preguntar por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- 4. PRUEBA -->
+<section class="oscuro rev" id="prueba">
+  <div class="in">
+    <p class="etiqueta">Prueba</p>
+    <div class="regla"></div>
+    <h2>Datos que se pueden comprobar.</h2>
+    <ul class="datos">
+      <li><strong>Fuentes de Cenicafé</strong>Levante: Avance Técnico 423. Zoca: Boletín Técnico 32. Producción: Avance Técnico 424, con ajuste por densidad y sombrío.</li>
+      <li><strong>Aprox. 1 %</strong>de los caficultores que conocemos hace análisis de suelo con regularidad. Estimación del grupo.</li>
+      <li><strong>Cerca de $120.000</strong>por un bulto de 50 kg de abono compuesto en San Lorenzo o Pasto. Dato del grupo.</li>
+      <li><strong>Probada en navegador</strong>en las tres etapas, con datos válidos e inválidos y en pantalla de celular.</li>
+    </ul>
+    <h3 class="sub-h">Levante: el plan de la app frente a la Tabla 1 de Cenicafé</h3>
+    <div class="tabla-caja">
+      <table>
+        <thead><tr><th>Nutriente (g por planta)</th><th>Tabla 1 de Cenicafé</th><th>Plan de FertiCafé</th></tr></thead>
+        <tbody>
+          <tr><td>N</td><td>58</td><td>58,4</td></tr>
+          <tr><td>P<sub>2</sub>O<sub>5</sub></td><td>15</td><td>15,2</td></tr>
+          <tr><td>K<sub>2</sub>O</td><td>15</td><td>15</td></tr>
+          <tr><td>MgO</td><td>5</td><td>4,4</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted" style="margin-top:10px">Las dosis de Cenicafé son aproximadas, por eso los totales no coinciden exactamente.</p>
+  </div>
+</section>
+
+<!-- 5. EN REDES -->
+<section class="claro rev" id="redes">
+  <div class="in">
+    <p class="etiqueta">En redes</p>
+    <div class="regla"></div>
+    <h2>El carrusel para Instagram.</h2>
+    <p class="lead">Seis láminas verticales 4:5.</p>
+
+    <div class="carrusel" role="region" aria-label="Carrusel de 6 láminas" tabindex="0">
+      <article class="lamina con-img"><img src="img/carrusel-portada.jpg" alt="Lámina 1 de 6: Optimiza tu fertilización de café. Datos claros para decisiones más inteligentes." onerror="falta(this)"></article>
+      <article class="lamina"><span class="n">2/6</span><p>Cerca del 1 % de los caficultores que conocemos hace análisis de suelo con regularidad.</p><small>Estimación del grupo</small></article>
+      <article class="lamina osc"><span class="n">3/6</span><p>¿Cuánto comprar? FertiCafé calcula gramos por planta y bultos de 50 kg.</p><small>Dosis y compra</small></article>
+      <article class="lamina"><span class="n">4/6</span><p>¿Cuál abono? Compara grados compuestos y muestra el más barato.</p><small>Comparador</small></article>
+      <article class="lamina osc"><span class="n">5/6</span><p>¿Cuándo fertilizar? Calendario con recordatorios para cada lote.</p><small>Calendario</small></article>
+      <article class="lamina"><span class="n">6/6</span><p>Escríbenos por WhatsApp y calcula el abono de tu lote.</p><small>FertiCafé</small></article>
+    </div>
+    <p class="deslizar">Desliza para ver las 6 láminas.</p>
+
+    <div class="post">
+      <p class="gancho">FertiCafé te dice cuánto y qué fertilizante aplicar, sin análisis de suelo.</p>
+      <p>Calcula la dosis recomendada en gramos por planta, los bultos de 50 kg y cuál grado compuesto sale más barato.</p>
+      <p>También te da un calendario con recordatorios para cada lote.</p>
+      <p>Escríbenos por WhatsApp y pruébalo en tu finca.</p>
+      <p class="tags">#FertiCafé #CaféDeNariño #Fertilización #Caficultura #SanLorenzoNariño</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="in">FertiCafé · San Lorenzo, Nariño · Recomendaciones generales de Cenicafé. No reemplazan el análisis de suelo.</div>
+</footer>
+
+<div class="fijo">
+  <a class="btn" href="https://wa.me/573234505069?text=Hola,%20quiero%20probar%20FertiCaf%C3%A9" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+</div>
+
+<script>
+  // Las secciones aparecen suavemente al bajar. Sin JavaScript, todo se ve igual.
+  (function () {
+    document.documentElement.classList.add("js");
+    var els = document.querySelectorAll(".rev");
+    if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("ya"); }); return; }
+    var io = new IntersectionObserver(function (items) {
+      items.forEach(function (it) { if (it.isIntersecting) { it.target.classList.add("ya"); io.unobserve(it.target); } });
+    }, { threshold: 0.06 });
+    els.forEach(function (e) { io.observe(e); });
+  })();
+</script>
+</body>
+</html>
